@@ -59,12 +59,24 @@ window.findNQueensSolutions = function(n) {
   var addColumn = function (board,colInd) {
     if (colInd < n) {
       for (var rowInd=0; rowInd<n; rowInd++) {
-        board.togglePiece(rowInd,colInd);
+      var noConflict=true;
+   //   if ()
+      if (board._isInBounds(rowInd-1,colInd-1)&&
+                          board._isInBounds(rowInd+1,colInd-1)) {
+        noConflict =  !(!!board.rows()[rowInd][colInd - 1]
+                          || !!board.rows()[rowInd - 1][colInd - 1]
+                          || !!board.rows()[rowInd + 1][colInd - 1]);
+      }
+        if(noConflict){
+          board.togglePiece(rowInd,colInd);
 
-        if (!board.hasAnyQueensConflicts()) {
-          addColumn(board, colInd+1);
+          if (!board.hasAnyQueensConflicts()) {
+            addColumn(board, colInd+1);
+          }
+
+          board.togglePiece(rowInd,colInd);
         }
-        board.togglePiece(rowInd,colInd);
+
       }
     } else {
       solutions.push(_.map(board.rows(), function(arr) {return arr.slice(0)}))
