@@ -57,32 +57,20 @@ window.countNRooksSolutions = function(n) {
 window.findNQueensSolutions = function(n) {
   var solutions = []; //storage for final solutions
   var addColumn = function (board,colInd) {
-    // debugger;
     if (colInd < n) {
-      //printBoard(board.rows());
       for (var rowInd=0; rowInd<n; rowInd++) {
-
-        // var newBoard = new Board(board.rows().slice(0));
-        // console.log("Row:", rowInd, "Col:", colInd);
         board.togglePiece(rowInd,colInd);
 
         if (!board.hasAnyQueensConflicts()) {
-          // console.log(newBoard.rows());
           addColumn(board, colInd+1);
-          // board.togglePiece(rowInd,colInd);
         }
-
         board.togglePiece(rowInd,colInd);
-
       }
     } else {
-      //console.log(board.rows());
       solutions.push(_.map(board.rows(), function(arr) {return arr.slice(0)}))
     }
   }
   addColumn(new Board({n:n}),0);
-  //console.log('Single solution for ' + n + ' queens:', JSON.stringify(solutions));
-  //printBoard(solutions[1]);
   return solutions;
 }
 
