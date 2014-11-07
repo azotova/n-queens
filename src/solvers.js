@@ -95,6 +95,104 @@ window.findNQueensSolution = function(n) {
   return solution;
 };
 
+//parseInt('1111', 2)?
+//toString, with radex?
+
+window.makeBinArr = function (num) {
+  var strBin=num.toString(2);
+  return strBin.split("");
+}
+
+
+//Valid Queen
+//var bit  = poss & ~poss;
+
+window.getLeastSig = function(binaryArr){
+  var emptyBinary = _.map(_.range(0, binaryArr.length), function(){ return 0;})
+  for(var i = binaryArr.length - 1; i >= 0; i--) {
+    if(binaryArr[i] === 1) {
+      emptyBinary[i] = 1;
+      return emptyBinary;
+    }
+  }
+}
+
+window.removeElement = function(poss, bit){
+  if (poss.length !== bit.length) {
+    return "Diff lengths";
+  } else {
+    for (var i=0; i<poss.length;i++) {
+      poss[i]=poss[i]-bit[i];
+    }
+  return poss;
+  }
+}
+
+window.not = function(bArr){
+ return _.map(bArr, function(val) { if(val === 1){
+                                return 0;
+                              } else {
+                                return 1;
+                                }})
+}
+
+window.or = function(bArr1, bArr2){
+  return _.map(bArr1, function(bArr1Val, ind) {
+                if((bArr1Val + bArr2[ind]) === 0) {
+                  return 0;
+                } else {
+                  return 1;
+                }
+              })
+}
+
+window.emptyBinary = function(n) {
+  return _.map(_.range(0,n), function() {return 0;});
+}
+
+window.and = function(bArr1, bArr2) {
+   return _.map(bArr1, function(bArr1Val, ind) {
+                if((bArr1Val + bArr2[ind]) === 2) {
+                  return 1;
+                } else {
+                  return 0;
+                }
+              })
+
+}
+
+window.leftShift = function(binaryArr, numShifts){
+  var newArr = [];
+  _.each(binaryArr, function(val, ind) {
+      if(ind !== _.range()) {
+        newArr.push(val);
+      }
+  })
+
+  _.each(_.range(numShifts - 1), function() { newArr.push(0)});
+  return newArr;
+}
+
+window.findBinaryNQueensSolution = function(n) {
+  var ld = emptyBinary(n);
+  var cols = emptyBinary(n);
+  var rd = emptyBinary(n);
+  var all = not(emptyBinary(n));
+
+  function addRow(ld, cols, rd){
+    var poss = and(not(or(or(ld, cols), rd)), all);
+    while(_.reduce(poss, function(accum, val) { return accum + val }, 0) > 0){
+      var bit = getLeastSig(poss);
+      removeElement(poss, bit);
+
+      addRow(or(ld, bit))
+
+    }
+  }
+
+
+}
+
 
 // return the number of nxn chessboards that exist, with n queens placed such that none of them can attack each other
 window.countNQueensSolutions = function(n) {
