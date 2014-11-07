@@ -32,7 +32,7 @@ describe('solvers', function() {
     });
 
   });
-*/
+
   describe('findNQueensSolution()', function() {
 
     it('finds a valid solution for n of 0-8', function() {
@@ -80,5 +80,5 @@ describe('solvers', function() {
     });
 
   });
-
+*/
 });

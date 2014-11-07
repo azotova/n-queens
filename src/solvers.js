@@ -173,7 +173,7 @@ window.leftShift = function(binaryArr, numShifts){
   return newArr;
 }
 
-window.findBinaryNQueensSolution = function(n) {
+/*window.findBinaryNQueensSolution = function(n) {
   var ld = emptyBinary(n);
   var cols = emptyBinary(n);
   var rd = emptyBinary(n);
@@ -191,8 +191,25 @@ window.findBinaryNQueensSolution = function(n) {
   }
 
 
-}
+}*/
 
+window.findBinaryNQueensSolution = function (n) {
+  // var all = Math.pow(2,n)-1;
+  var all = (1<<n)-1;
+  var solutions = 0;
+  var findPosition = function (ld,cols,rd) {
+    //debugger;
+    var poss = ~ (ld | cols | rd) & all; //where you can put a queen
+    while (poss>0) {
+      var bit = poss & -poss; //we put the queen to the first available position, counting from the right
+      poss -=bit;
+      findPosition((ld|bit)<<1, (cols|bit), (rd|bit)>>1);
+    }
+    if (cols === all) {solutions++;}
+  }
+  findPosition(0,0,0);
+  return solutions;
+}
 
 // return the number of nxn chessboards that exist, with n queens placed such that none of them can attack each other
 window.countNQueensSolutions = function(n) {
